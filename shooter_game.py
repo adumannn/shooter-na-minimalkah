@@ -49,6 +49,7 @@ background = transform.scale(image.load("galaxy.jpg"), (800, 500))
 #счет
 score = 0
 missed = 0
+shoot = 10
 
 font.init()
 font1 = font.Font(None, 40)
@@ -86,21 +87,37 @@ monsters.add(enemy3)
 monsters.add(enemy4)
 monsters.add(enemy5)
 
+desc = True
+
 #цикл 
 while game:
 
     for e in event.get():
         if e.type == QUIT:
           game = False
-    
+        
         if e.type == KEYDOWN:
-            if e.key == K_SPACE:
-                player.fire()
+            if e.key == K_r:
+                desc = False
+                shoot = 10
+            
+        if e.type == KEYDOWN:
+            if e.key == K_r:
+                desc = True
+
+            if desc == True:
+                if e.type == KEYDOWN:
+                    if e.key == K_SPACE:
+                        player.fire()
+                        shoot -=1
+                        if shoot == 0:
+                            desc = False
 
     if finish != True:
 
         soccer = font1.render('Счет:' + str(score), True, (255, 250, 250))
         misser = font1.render('Пропущено:' + str(missed), True, (255, 250, 250))
+        count = font1.render('Пули:' + str(shoot), True, (255, 250, 250))
 
         win = font2.render('YOU WIN!', True, (255, 215, 0))
         lose = font2.render('YOU LOSE!', True, (180, 0, 0))
@@ -108,6 +125,7 @@ while game:
         window.blit(background,(0,0))
         window.blit(soccer, (10, 0))
         window.blit(misser, (10, 30))
+        window.blit(count, (10, 70))
 
         player.update()
         player.reset()
