@@ -1,5 +1,4 @@
-#Создай собственный Шутер!
-
+# duman's first pygame project/self-made
 from pygame import *
 from random import randint
 
